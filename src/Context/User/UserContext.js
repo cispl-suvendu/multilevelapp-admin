@@ -8,7 +8,7 @@ export const UserContext = createContext()
 
 export const UserContextProvider = ({ children }) => {
 
-    const API_END_POINT = "https://multilevelapp-api.vercel.app"
+    const API_END_POINT = "https://multilevelapp-api.vercel.app/api/v1"
 
     const USER_TYPE = {
         ADMIN: "ADMIN",
