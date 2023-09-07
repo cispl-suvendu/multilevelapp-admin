@@ -3,12 +3,22 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { UserContextProvider } from './Context/User/UserContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  //   <UserContextProvider>
+  //     <App />
+  //     <ToastContainer />
+  //   </UserContextProvider>
+  // </React.StrictMode>
+  <UserContextProvider>
     <App />
-  </React.StrictMode>
+    <ToastContainer />
+  </UserContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
