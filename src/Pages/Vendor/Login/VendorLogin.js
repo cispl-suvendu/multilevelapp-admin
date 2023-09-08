@@ -8,5 +8,5 @@ export default function VendorLogin() {
         password: ''
     }
     
-    return <Login title="Vendor Login" initialValues={initialValues} handleSubmit={handleSignIn} signUpLink="" socialLogin="" forgotPasswordLink="/forgot-password/vendor" />
+    return <Login title="Vendor Login" initialValues={initialValues} handleSubmit={handleSignIn} signUpLink="/register/vendor" socialLogin="" forgotPasswordLink="/forgot-password/vendor" />
 }

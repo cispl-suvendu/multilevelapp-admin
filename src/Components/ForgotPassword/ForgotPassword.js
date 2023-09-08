@@ -26,7 +26,7 @@ export default function ForgotPassword({ title, initialValues, handleSubmit }) {
     }
     const CURRENT_PAGE_TYPE = getPageType()
     return (
-        <section className="bg-gray-light2 h-screen flex justify-center items-center">
+        <section className="bg-gray-light2 min-h-screen flex justify-center items-center">
             <div className="md:w-2/5 w-10/12">
                 <div className="bg-white-color p-6 rounded-md shadow-sm hover:shadow-md border">
                     <h1 className="mt-3 text-3xl font-bold capitalize">{title}</h1>
