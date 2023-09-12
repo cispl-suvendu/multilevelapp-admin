@@ -10,7 +10,7 @@ const SignupSchema = Yup.object().shape({
 
 export default function ResetPassword({ title, initialValues, handleSubmit }) {
     const { isLoading } = useUserContext()
-    const {token} = useParams()
+    const {id, token} = useParams()
     const location = useLocation()
     let page_Type;
     function getPageType() {
@@ -36,7 +36,7 @@ export default function ResetPassword({ title, initialValues, handleSubmit }) {
                             initialValues={initialValues}
                             validationSchema={SignupSchema}
                             onSubmit={values => {
-                                handleSubmit({...values, token, CURRENT_PAGE_TYPE});
+                                handleSubmit({...values, token, id, CURRENT_PAGE_TYPE});
                             }}
                         >
                             {({ errors, touched }) => (

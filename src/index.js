@@ -16,12 +16,13 @@ root.render(
   //     <ToastContainer />
   //   </UserContextProvider>
   // </React.StrictMode>
-  <RootContextProvider>
-    <UserContextProvider>
+
+  <UserContextProvider>
+    <RootContextProvider>
       <App />
-      <ToastContainer />
-    </UserContextProvider>
-  </RootContextProvider>
+    </RootContextProvider>
+    <ToastContainer />
+  </UserContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

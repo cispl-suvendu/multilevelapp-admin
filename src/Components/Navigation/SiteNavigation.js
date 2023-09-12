@@ -14,6 +14,8 @@ import VendorForgotPassword from "../../Pages/Vendor/ForgotPassword/VendorForgot
 import VendorResetPassword from "../../Pages/Vendor/ResetPassword/VendorResetPassword"
 import VendorRegister from "../../Pages/Vendor/Register/VendorRegister"
 import AllVendors from "../../Pages/Admin/Vendors/AllVendors"
+import VendorActivityLog from "../../Pages/Vendor/ActivityLog/VendorActivityLog"
+import AdminActivityLog from "../../Pages/Admin/ActivityLog/AdminActivityLog"
 
 
 export default function SiteNavigation() {
@@ -25,18 +27,20 @@ export default function SiteNavigation() {
                 <Route path="/" element={<GlobalElement><GlobalHome /></GlobalElement>} />
                 <Route path="login/admin" element={<GlobalElement><AdminLogin /></GlobalElement>} />
                 <Route path="forgot-password/admin" element={<GlobalElement><AdminForgotPassword /></GlobalElement>} />
-                <Route path="reset-password/admin/:token" element={<GlobalElement><AdminResetPassword /></GlobalElement>} />
+                <Route path="reset-password/admin/:id/:token" element={<GlobalElement><AdminResetPassword /></GlobalElement>} />
                 <Route path="login/vendor" element={<GlobalElement><VendorLogin /></GlobalElement>} />
                 <Route path="register/vendor" element={<GlobalElement><VendorRegister /></GlobalElement>} />
                 <Route path="forgot-password/vendor" element={<GlobalElement><VendorForgotPassword /></GlobalElement>} />
-                <Route path="reset-password/vendor/:token" element={<GlobalElement><VendorResetPassword /></GlobalElement>} />
+                <Route path="reset-password/vendor/:id/:token" element={<GlobalElement><VendorResetPassword /></GlobalElement>} />
                 <Route path="login/customer" element={<GlobalElement><CustomerLogin /></GlobalElement>} />
                 <Route path="*" element={<NotFound />} />
                 {/* Admin */}
                 <Route path="admin" element={<AdminElement><AdminHome /></AdminElement>} />
                 <Route path="admin/vendors" element={<AdminElement><AllVendors /></AdminElement>} />
+                <Route path="admin/activity" element={<AdminElement><AdminActivityLog /></AdminElement>} />
                 {/* Vendor */}
                 <Route path="vendor" element={<VendorElement><VendorHome /></VendorElement>} />
+                <Route path="vendor/activity" element={<VendorElement><VendorActivityLog /></VendorElement>} />
                 {/* customer */}
                 <Route path="customer" element={<CustomerElement><CustomerHome /></CustomerElement>} />
             </Routes>

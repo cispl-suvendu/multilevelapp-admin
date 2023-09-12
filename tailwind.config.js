@@ -10,8 +10,8 @@ module.exports = {
   ],
   theme: {
     colors: {
-      'active-color': '#8100e4',
-      'active-color2': '#fb163f',
+      'active-color': '#009FFF',
+      'active-color2': '#FF7A52',
       'text-color': '#222',
       'gray-dark':'#878787',
       'gray-light': '#fafafa',

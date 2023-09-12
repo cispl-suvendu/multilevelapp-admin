@@ -31,7 +31,7 @@ export default function UserHeader() {
             <Menu.Button>
               <div className="flex items-center bg-[rgba(255,255,255,.2)] pl-2 rounded-sm gap-2">
                 <div className="text-xs capitalize">{CURRENT_USER?.firstName}</div>
-                <div className="bg-error-color text-white-color w-8 h-8 font-bold font-heading flex items-center justify-center rounded-md">{CURRENT_USER?.firstName.charAt(0)}</div>
+                <div className="bg-active-color2 text-white-color w-8 h-8 font-bold font-heading flex items-center justify-center rounded-md">{CURRENT_USER?.firstName.charAt(0)}</div>
               </div>
             </Menu.Button>
             <Menu.Items className="absolute bg-white-color rounded-sm px-4 py-2 shadow-md right-0 w-52">

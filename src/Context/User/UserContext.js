@@ -30,7 +30,7 @@ export const UserContextProvider = ({ children }) => {
     const DECODED_CURRENT_USER_TOKEN = CURRENT_USER_TOKEN ? jwt_decode(CURRENT_USER_TOKEN) : null
 
     const CURRENT_USER_TYPE = CURRENT_USER?.role || USER_TYPE.GLOBAL
-    
+
 
     function GlobalElement({ children }) {
         return <>{children}</>
@@ -97,6 +97,11 @@ export const UserContextProvider = ({ children }) => {
             toast.success(`Welcome back ${res_data.firstName}`);
             setIsLoading(false)
             sessionStorage.setItem("userInfo", JSON.stringify(res_data));
+            try {
+                await postActivityLog({ ...res_data, CURRENT_PAGE_TYPE, message: "Successfully signin" })
+            } catch (error) {
+                toast.error(error.message);
+            }
 
         } catch (error) {
             toast.error(error.message);
@@ -136,10 +141,10 @@ export const UserContextProvider = ({ children }) => {
 
     // Reset Password
 
-    const handleResetPassword = async ({ token, password, CURRENT_PAGE_TYPE }) => {
+    const handleResetPassword = async ({ token, id, password, CURRENT_PAGE_TYPE }) => {
         setIsLoading(true)
         try {
-            const res = await fetch(`${API_END_POINT}/reset-password/${CURRENT_PAGE_TYPE}/${token}`, {
+            const res = await fetch(`${API_END_POINT}/reset-password/${CURRENT_PAGE_TYPE}/${id}/${token}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -160,6 +165,11 @@ export const UserContextProvider = ({ children }) => {
                 onClose: () => window.location.href = `/${CURRENT_PAGE_TYPE}`
             });
             setIsLoading(false)
+            try {
+                await postActivityLog({ _id:id, token, CURRENT_PAGE_TYPE, message: "Password Updated successfully!" })
+            } catch (error) {
+                toast.error(error.message);
+            }
         } catch (error) {
             toast.error(error.message);
             setIsLoading(false)
@@ -196,6 +206,11 @@ export const UserContextProvider = ({ children }) => {
             });
             setIsLoading(false)
             sessionStorage.setItem("userInfo", JSON.stringify(res_data));
+            try {
+                await postActivityLog({ ...res_data, CURRENT_PAGE_TYPE, message: `Account created with ${res_data.email}` })
+            } catch (error) {
+                toast.error(error.message);
+            }
 
         } catch (error) {
             toast.error(error.message);
@@ -203,8 +218,42 @@ export const UserContextProvider = ({ children }) => {
         }
     }
 
+    // postActivityLog
+
+    async function postActivityLog({ _id, token, message, CURRENT_PAGE_TYPE }) {
+        // console.log(_id, token, message, CURRENT_PAGE_TYPE)
+        try {
+            await fetch(`${API_END_POINT}/${CURRENT_PAGE_TYPE}/${_id}/activity`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    fetch(`${API_END_POINT}/${CURRENT_PAGE_TYPE}/${_id}/activity`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify(
+                            {
+                                activityLog: data === null ? [{ message }] : [...data.activityLog, { message }]
+                            }
+                        )
+                    })
+                })
+        } catch (error) {
+            toast.error(error.message);
+        }
+    }
+
     return (
-        <UserContext.Provider value={{setIsLoading, API_END_POINT, GlobalElement, AdminElement, VendorElement, CustomerElement, signOut, isLoading, handleSignIn, handleForgotPassword, handleResetPassword, handleSignUp, CURRENT_USER }}>
+        <UserContext.Provider value={{ setIsLoading, API_END_POINT, GlobalElement, AdminElement, VendorElement, CustomerElement, signOut, isLoading, handleSignIn, handleForgotPassword, handleResetPassword, handleSignUp, CURRENT_USER }}>
             {children}
         </UserContext.Provider>
     )
