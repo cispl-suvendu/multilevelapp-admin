@@ -4,12 +4,12 @@ import { useRootContext } from "../../../Context/Root/RootContext"
 import { useUserContext } from "../../../Context/User/UserContext"
 import Log from "../../../Components/Log/Log"
 export default function VendorActivityLog() {
-    const { vendorActivity, fetchVendorActivity } = useRootContext()
+    const { vendorActivity, fetchVendorActivity , setVendorActivity} = useRootContext()
     const { isLoading } = useUserContext()
     useEffect(() => {
         fetchVendorActivity()
         return () => {
-            fetchVendorActivity()
+            setVendorActivity([])
         }
     }, []);
     const vendorActivityLog = vendorActivity !== undefined && vendorActivity.sort().reverse()

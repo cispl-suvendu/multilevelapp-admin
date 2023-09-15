@@ -73,7 +73,7 @@ export default function Login({ title, initialValues, handleSubmit, signUpLink, 
                                         <span className="block text-md font-medium text-slate-400 mb-1">Password</span>
                                         <Field name="password" type="password" className="border w-full py-2 px-3 rounded h-12" placeholder="password" />
                                     </label>
-                                    <button className="rounded bg-active-color text-white w-full py-3 font-bold text-white-color" type="submit" disabled={isLoading}>{isLoading ? 'Please wait...' : 'Sign in to your account'}</button>
+                                    <button className="rounded bg-active-color text-white w-full py-3 font-bold text-white-color disabled:bg-gray-light3 disabled:cursor-not-allowed" type="submit" disabled={isLoading}>{isLoading ? 'Please wait...' : 'Sign in to your account'}</button>
                                 </Form>
                             )}
                         </Formik>

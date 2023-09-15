@@ -16,6 +16,7 @@ import VendorRegister from "../../Pages/Vendor/Register/VendorRegister"
 import AllVendors from "../../Pages/Admin/Vendors/AllVendors"
 import VendorActivityLog from "../../Pages/Vendor/ActivityLog/VendorActivityLog"
 import AdminActivityLog from "../../Pages/Admin/ActivityLog/AdminActivityLog"
+import SingleVendorAdminView from "../../Pages/Admin/Vendors/SingleVendor"
 
 
 export default function SiteNavigation() {
@@ -38,6 +39,7 @@ export default function SiteNavigation() {
                 <Route path="admin" element={<AdminElement><AdminHome /></AdminElement>} />
                 <Route path="admin/vendors" element={<AdminElement><AllVendors /></AdminElement>} />
                 <Route path="admin/activity" element={<AdminElement><AdminActivityLog /></AdminElement>} />
+                <Route path="admin/vendor/:id" element={<AdminElement><SingleVendorAdminView /></AdminElement>} />
                 {/* Vendor */}
                 <Route path="vendor" element={<VendorElement><VendorHome /></VendorElement>} />
                 <Route path="vendor/activity" element={<VendorElement><VendorActivityLog /></VendorElement>} />
