@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import AdminWarpper from "../../../Components/Layout/Admin/AdminWarpper"
 import { useRootContext } from "../../../Context/Root/RootContext"
 import Log from "../../../Components/Log/Log"
-import Rectangle from "../../../Components/Skeleton/Rectangle"
+import Rectangle from "../../../Components/Sklaton/Rectangle"
 
 export default function AdminActivityLog() {
     const { adminActivity, fetchAdminActivity, setAdminActivity } = useRootContext()

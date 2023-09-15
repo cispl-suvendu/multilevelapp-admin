@@ -8,7 +8,7 @@ import 'primereact/resources/primereact.min.css';
 import { Tag } from 'primereact/tag';
 import Moment from 'react-moment'
 import { useNavigate } from "react-router";
-import Rectangle from "../../../Components/Skeleton/Rectangle";
+import Rectangle from "../../../Components/Sklaton/Rectangle";
 
 
 
