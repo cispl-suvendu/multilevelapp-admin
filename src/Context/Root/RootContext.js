@@ -1,11 +1,12 @@
 import { createContext, useContext, useState } from "react";
 import { useUserContext } from "../User/UserContext";
 import { toast } from 'react-toastify'
+import { Tag } from 'primereact/tag'
 
 export const RootContext = createContext()
 
 export const RootContextProvider = ({ children }) => {
-    const { API_END_POINT, setIsLoading, CURRENT_USER } = useUserContext()
+    const { API_END_POINT, setIsLoading, CURRENT_USER, postActivityLog } = useUserContext()
 
     const [vendors, setVendors] = useState([])
     const [vendorActivity, setVendorActivity] = useState([])
@@ -120,8 +121,46 @@ export const RootContextProvider = ({ children }) => {
         }
     }
 
+    const updateVendorStatus = ({ id, isActive }) => {
+        setIsLoading(true)
+        try {
+            fetch(`${API_END_POINT}/admin/vendor/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${CURRENT_USER.token}`
+                },
+                body: JSON.stringify({
+                    isActive
+                })
+            })
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    setSingleVendorData(data)
+                    setIsLoading(false)
+                    toast.success("Vendor Status Updated!")
+                    try {
+                        postActivityLog({_id:CURRENT_USER._id, token:CURRENT_USER.token, CURRENT_PAGE_TYPE:"admin", message: `${data.firstName} ${data.lastName} Account status updated to ${data.isActive === true ? "Active" : "Inactive"}`})
+                    } catch (error) {
+                        toast.error(error.message);
+                    }
+                })
+                .catch((error) => {
+                    toast.error(error.message);
+                    setIsLoading(false)
+                });
+            
+            
+        } catch (error) {
+            toast.error(error.message);
+            setIsLoading(false)
+        }
+    }
+
     return (
-        <RootContext.Provider value={{ fetchVendors, vendors, vendorActivity, fetchVendorActivity, adminActivity, fetchAdminActivity, fetchSingleVendor_AS_ADMIN, singleVendorData, setSingleVendorData, setVendorActivity, setVendors, setAdminActivity }}>
+        <RootContext.Provider value={{ fetchVendors, vendors, vendorActivity, fetchVendorActivity, adminActivity, fetchAdminActivity, fetchSingleVendor_AS_ADMIN, singleVendorData, setSingleVendorData, setVendorActivity, setVendors, setAdminActivity, updateVendorStatus }}>
             {children}
         </RootContext.Provider>
     )

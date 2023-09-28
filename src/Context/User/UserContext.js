@@ -8,8 +8,8 @@ import jwt_decode from "jwt-decode"
 
 export const UserContext = createContext()
 
-const API_END_POINT = "https://multilevelapp-api.vercel.app/api/v1"
-// const API_END_POINT = "http://localhost:5000/api/v1"
+// const API_END_POINT = "https://multilevelapp-api.vercel.app/api/v1"
+const API_END_POINT = "http://localhost:5000/api/v1"
 
 
 export const UserContextProvider = ({ children }) => {
@@ -253,7 +253,7 @@ export const UserContextProvider = ({ children }) => {
     }
 
     return (
-        <UserContext.Provider value={{ setIsLoading, API_END_POINT, GlobalElement, AdminElement, VendorElement, CustomerElement, signOut, isLoading, handleSignIn, handleForgotPassword, handleResetPassword, handleSignUp, CURRENT_USER }}>
+        <UserContext.Provider value={{ setIsLoading, API_END_POINT, GlobalElement, AdminElement, VendorElement, CustomerElement, signOut, isLoading, handleSignIn, handleForgotPassword, handleResetPassword, handleSignUp, CURRENT_USER, postActivityLog }}>
             {children}
         </UserContext.Provider>
     )
