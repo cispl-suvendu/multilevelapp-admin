@@ -21,7 +21,7 @@ export default function UserHeader() {
   const { CURRENT_USER, signOut } = useUserContext()
 
   return (
-    <div className="bg-active-color w-full px-6 py-2 text-white-color">
+    <div className="bg-active-color w-full px-6 py-2 text-white-color relative z-10">
       <div className="flex justify-between items-center">
         <div className="font-heading">
           <Link to={`/${CURRENT_PAGE_TYPE}`} className="flex items-center gap-1 text-xl font-bold"><BiWind /> MlApp</Link>
