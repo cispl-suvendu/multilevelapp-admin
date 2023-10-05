@@ -30,14 +30,20 @@ export default function AdminHome() {
           <CountUp
             end={activeVendors.length}
             className="font-bold text-3xl"
-          />
+          /> /  <CountUp
+          end={vendors.length}
+          className="font-bold text-sm text-gray-dark"
+        />
         </div>
         <div className="bg-white-color rounded-md shadow-md p-4 w-full md:w-3/12 text-text-color">
           <div className="font-bold text-sm border-b border-gray-light3 pb-2 mb-2">Active Service Category</div>
           <CountUp
             end={activServiceCat.length}
             className="font-bold text-3xl"
-          />
+          /> /  <CountUp
+          end={allServiceCat.length}
+          className="font-bold text-sm text-gray-dark"
+        />
         </div>
       </div>
     </AdminWarpper>
