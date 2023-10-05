@@ -46,13 +46,13 @@ export default function PersonalDetails({ data }) {
                                     <label className="font-bold text-text-color text-xs block mb-2">
                                         First Name
                                     </label>
-                                    <Field name="firstName" className="h-10 border border-gray-light3 w-full px-2 text-sm rounded-md text-gray-dark" />
+                                    <Field name="firstName" className="h-10 border border-gray-light3 w-full px-2 text-sm rounded-md text-gray-dark" disabled />
                                 </div>
                                 <div className="w-full">
                                     <label className="font-bold text-text-color text-xs block mb-2">
                                         Last Name
                                     </label>
-                                    <Field name="lastName" className="h-10 border border-gray-light3 w-full px-2 text-sm rounded-md text-gray-dark" />
+                                    <Field name="lastName" className="h-10 border border-gray-light3 w-full px-2 text-sm rounded-md text-gray-dark" disabled />
                                 </div>
                             </div>
                             <div className="flex flex-col md:flex-row gap-4 w-full mb-4">

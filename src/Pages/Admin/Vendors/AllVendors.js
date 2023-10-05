@@ -9,7 +9,8 @@ import { Tag } from 'primereact/tag';
 import Moment from 'react-moment'
 import { useNavigate } from "react-router";
 import Rectangle from "../../../Components/Sklaton/Rectangle";
-
+import { CSVLink } from "react-csv";
+import { BiCloudDownload } from 'react-icons/bi';
 
 
 export default function AllVendors() {
@@ -51,6 +52,16 @@ export default function AllVendors() {
         <AdminWarpper>
             <div className="mb-6">
                 <h1 className="text-md font-bold text-text-color">All Vendors</h1>
+                <div className="flex justify-end">
+                    <CSVLink
+                        data={vendorsDesc}
+                        filename={"Vendors-list.csv"}
+                        className="flex gap-1 font-bold items-center hover:text-active-color"
+                    >
+                        <BiCloudDownload className="text-active-color text-xl" />
+                        <span className="text-xs">Download CSV</span>
+                    </CSVLink>
+                </div>
             </div>
             <div className="bg-white-color rounded-md shadow-md p-4">
                 {vendorsDesc.length === 0 ? <Rectangle /> :

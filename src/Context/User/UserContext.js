@@ -1,9 +1,11 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import AdminLogin from "../../Pages/Admin/Login/AdminLogin"
 import { toast } from 'react-toastify'
 import VendorLogin from "../../Pages/Vendor/Login/VendorLogin"
 import CustomerLogin from "../../Pages/Customer/Login/CustomerLogin"
 import jwt_decode from "jwt-decode"
+import NotFound from "../../Pages/Golbal/Error/NotFound"
+
 
 
 export const UserContext = createContext()
@@ -31,6 +33,8 @@ export const UserContextProvider = ({ children }) => {
 
     const CURRENT_USER_TYPE = CURRENT_USER?.role || USER_TYPE.GLOBAL
 
+    const DECODED_CURRENT_USER_Active_STATUS = CURRENT_USER?.activeStatus ? jwt_decode(CURRENT_USER?.activeStatus) : null
+
 
     function GlobalElement({ children }) {
         return <>{children}</>
@@ -51,6 +55,14 @@ export const UserContextProvider = ({ children }) => {
             return <>{children}</>
         } else {
             return <VendorLogin />
+        }
+    }
+
+    function ActiveVndor({ children }) {
+        if (DECODED_CURRENT_USER_Active_STATUS?.isActive === true) {
+            return <>{children}</>
+        } else {
+            return <NotFound />
         }
     }
 
@@ -166,7 +178,7 @@ export const UserContextProvider = ({ children }) => {
             });
             setIsLoading(false)
             try {
-                await postActivityLog({ _id:id, token, CURRENT_PAGE_TYPE, message: "Password Updated successfully!" })
+                await postActivityLog({ _id: id, token, CURRENT_PAGE_TYPE, message: "Password Updated successfully!" })
             } catch (error) {
                 toast.error(error.message);
             }
@@ -251,9 +263,10 @@ export const UserContextProvider = ({ children }) => {
             toast.error(error.message);
         }
     }
+   
 
     return (
-        <UserContext.Provider value={{ setIsLoading, API_END_POINT, GlobalElement, AdminElement, VendorElement, CustomerElement, signOut, isLoading, handleSignIn, handleForgotPassword, handleResetPassword, handleSignUp, CURRENT_USER, postActivityLog }}>
+        <UserContext.Provider value={{ setIsLoading, API_END_POINT, GlobalElement, AdminElement, VendorElement, ActiveVndor, CustomerElement, signOut, isLoading, handleSignIn, handleForgotPassword, handleResetPassword, handleSignUp, CURRENT_USER, postActivityLog }}>
             {children}
         </UserContext.Provider>
     )

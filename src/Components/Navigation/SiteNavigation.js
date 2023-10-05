@@ -17,10 +17,13 @@ import AllVendors from "../../Pages/Admin/Vendors/AllVendors"
 import VendorActivityLog from "../../Pages/Vendor/ActivityLog/VendorActivityLog"
 import AdminActivityLog from "../../Pages/Admin/ActivityLog/AdminActivityLog"
 import SingleVendorAdminView from "../../Pages/Admin/Vendors/SingleVendor"
-
+import VendorServices from "../../Pages/Vendor/Services/VendorServices"
+import AdminAddService from "../../Pages/Admin/Services/AddService"
+import AdminListAllServices from "../../Pages/Admin/Services/ListAllServices"
+import AdminSingleService from "../../Pages/Admin/Services/SingleService"
 
 export default function SiteNavigation() {
-    const { GlobalElement, AdminElement, VendorElement, CustomerElement } = useUserContext()
+    const { GlobalElement, AdminElement, VendorElement, CustomerElement, ActiveVndor } = useUserContext()
     return (
         <Router>
             <Routes>
@@ -40,9 +43,13 @@ export default function SiteNavigation() {
                 <Route path="admin/vendors" element={<AdminElement><AllVendors /></AdminElement>} />
                 <Route path="admin/activity" element={<AdminElement><AdminActivityLog /></AdminElement>} />
                 <Route path="admin/vendor/:id" element={<AdminElement><SingleVendorAdminView /></AdminElement>} />
+                <Route path="admin/services/add" element={<AdminElement><AdminAddService /></AdminElement>} />
+                <Route path="admin/services" element={<AdminElement><AdminListAllServices /></AdminElement>} />
+                <Route path="admin/service/:id" element={<AdminElement><AdminSingleService /></AdminElement>} />
                 {/* Vendor */}
                 <Route path="vendor" element={<VendorElement><VendorHome /></VendorElement>} />
                 <Route path="vendor/activity" element={<VendorElement><VendorActivityLog /></VendorElement>} />
+                <Route path="vendor/services" element={<VendorElement><ActiveVndor><VendorServices /></ActiveVndor></VendorElement>} />
                 {/* customer */}
                 <Route path="customer" element={<CustomerElement><CustomerHome /></CustomerElement>} />
             </Routes>

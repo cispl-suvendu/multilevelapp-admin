@@ -3,7 +3,7 @@ import MainContent from "../Content/MainContent"
 import UserNavigation from "../Navigation/UserNavigation"
 import { AiOutlineHome } from "react-icons/ai";
 import { TbChartHistogram } from "react-icons/tb";
-
+import { FiFeather } from "react-icons/fi";
 
 export default function VendorWrapper({ children }) {
     const homeIcon = () => {
@@ -12,11 +12,32 @@ export default function VendorWrapper({ children }) {
     const activityIcon = () => {
         return <TbChartHistogram />
     }
+    const serviceIcon = () => {
+        return <FiFeather />
+    }
     const VENDOR_NAV = [
         {
             page:"Home",
             link:"/vendor",
             icon:homeIcon()
+        },
+        {
+            page:"Services",
+            link:"/vendor/services",
+            icon:serviceIcon(),
+            hasSub:true,
+            subMenu:[
+                {
+                    page:"All Service",
+                    link:"/vendor/services",
+                    icon:serviceIcon()
+                },
+                {
+                    page:"Add Service",
+                    link:"/vendor/services/add",
+                    icon:serviceIcon()
+                }
+            ]
         },
         {
             page:"Track Activity",

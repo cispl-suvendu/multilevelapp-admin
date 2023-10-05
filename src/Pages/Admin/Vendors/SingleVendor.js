@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react"
+import { useEffect } from "react"
 import AdminWarpper from "../../../Components/Layout/Admin/AdminWarpper"
 import { useRootContext } from "../../../Context/Root/RootContext"
 import { useParams } from "react-router"
@@ -18,7 +18,7 @@ export default function SingleVendorAdminView() {
             <div className="mb-6">
                 {singleVendorData === null ? <Skeleton className="mb-2" height="2rem"></Skeleton> : <h1 className="text-md font-bold">{singleVendorData?.firstName} {singleVendorData?.lastName}</h1>}
             </div>
-            <div className="flex flex-col md:flex-row md:gap-6">
+            <div className="flex flex-col md:flex-row gap-6">
                 <PersonalDetails data={singleVendorData} />
                 <SubscriptionDetails data={singleVendorData} />
             </div>
