@@ -1,7 +1,7 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { useUserContext } from "../User/UserContext";
 import { toast } from 'react-toastify'
-import { Tag } from 'primereact/tag'
+
 
 export const RootContext = createContext()
 
@@ -165,8 +165,7 @@ export const RootContextProvider = ({ children }) => {
         }
     }
 
-    const handleAddServiceCat = (event, dataName, dataAlice) => {
-        event.preventDefault();
+    const handleAddServiceCat = ({ name, caturl }) => {
         setIsLoading(true)
         try {
             fetch(`${API_END_POINT}/admin/services/cat/add`, {
@@ -176,8 +175,8 @@ export const RootContextProvider = ({ children }) => {
                     "authorization": `Bearer ${CURRENT_USER.token}`
                 },
                 body: JSON.stringify({
-                    name: dataName,
-                    caturl: dataAlice
+                    name,
+                    caturl
                 })
             })
                 .then(response => {
@@ -207,7 +206,7 @@ export const RootContextProvider = ({ children }) => {
     const fetchAllServices = () => {
         setIsLoading(true)
         try {
-            fetch(`${API_END_POINT}/admin/services/cat`, {
+            fetch(`${API_END_POINT}/${CURRENT_USER?.role.toLowerCase()}/services/cat`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -260,19 +259,19 @@ export const RootContextProvider = ({ children }) => {
         }
     }
 
-    const updateSingleSeriveCat_As_Admin = (id, switchVal, dataName, dataAlice) => {
+    const updateSingleSeriveCat_As_Admin = ({ catstatus, caturl, name, _id }) => {
         setIsLoading(true)
         try {
-            fetch(`${API_END_POINT}/admin/services/cat/edit/${id}`, {
+            fetch(`${API_END_POINT}/admin/services/cat/edit/${_id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                     "authorization": `Bearer ${CURRENT_USER.token}`
                 },
                 body: JSON.stringify({
-                    catstatus: switchVal,
-                    name: dataName,
-                    caturl: dataAlice
+                    catstatus,
+                    name,
+                    caturl
                 })
             })
                 .then(response => {
@@ -301,9 +300,83 @@ export const RootContextProvider = ({ children }) => {
     }
 
 
+    // add service
+
+    const handleAddService = ({ name, catId, cost, images, description }) => {
+        setIsLoading(true)
+        try {
+            fetch(`${API_END_POINT}/vendor/services/add`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${CURRENT_USER.token}`
+                },
+                body: JSON.stringify({
+                    name,
+                    cost,
+                    description,
+                    images,
+                    category: catId,
+                    createdBy: CURRENT_USER._id
+                })
+            })
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    setIsLoading(false)
+                    toast.success(`New Service Added - ${data.name} `)
+                    try {
+                        postActivityLog({ _id: CURRENT_USER._id, token: CURRENT_USER.token, CURRENT_PAGE_TYPE: "vendor", message: `New Service Added - ${data.name}` })
+                    } catch (error) {
+                        toast.error(error.message);
+                    }
+                })
+                .catch((error) => {
+                    toast.error(error.message);
+                    setIsLoading(false)
+                });
+        } catch (error) {
+            toast.error(error.message);
+            setIsLoading(false)
+        }
+    }
+
+    // fetch All service by vendor
+
+    const [allService, setAllService] = useState([])
+
+    const fetchAllServices_AS_VENDOR = () => {
+        setIsLoading(true)
+        try {
+            fetch(`${API_END_POINT}/vendor/services/createdby/${CURRENT_USER._id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${CURRENT_USER.token}`
+                }
+            })
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    setAllService(data)
+                })
+                .catch((error) => {
+                    toast.error(error.message);
+                });
+            setIsLoading(false)
+
+        } catch (error) {
+            toast.error(error.message);
+            setIsLoading(false)
+        }
+    }
+
+
 
     return (
-        <RootContext.Provider value={{ fetchVendors, vendors, vendorActivity, fetchVendorActivity, adminActivity, fetchAdminActivity, fetchSingleVendor_AS_ADMIN, singleVendorData, setSingleVendorData, setVendorActivity, setVendors, setAdminActivity, updateVendorStatus, shitchNavStatus, toggleMainNav, handleAddServiceCat, allServiceCat, setAllServiceCat, fetchAllServices, singleServiceData, setSingleServiceData, fetchSingleServiceCat_AS_ADMIN, updateSingleSeriveCat_As_Admin }}>
+        <RootContext.Provider value={{ fetchVendors, vendors, vendorActivity, fetchVendorActivity, adminActivity, fetchAdminActivity, fetchSingleVendor_AS_ADMIN, singleVendorData, setSingleVendorData, setVendorActivity, setVendors, setAdminActivity, updateVendorStatus, shitchNavStatus, toggleMainNav, handleAddServiceCat, allServiceCat, setAllServiceCat, fetchAllServices, singleServiceData, setSingleServiceData, fetchSingleServiceCat_AS_ADMIN, updateSingleSeriveCat_As_Admin, handleAddService, allService, setAllService, fetchAllServices_AS_VENDOR }}>
             {children}
         </RootContext.Provider>
     )

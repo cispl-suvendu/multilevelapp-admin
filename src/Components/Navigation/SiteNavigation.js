@@ -21,6 +21,7 @@ import VendorServices from "../../Pages/Vendor/Services/VendorServices"
 import AdminAddService from "../../Pages/Admin/Services/AddService"
 import AdminListAllServices from "../../Pages/Admin/Services/ListAllServices"
 import AdminSingleService from "../../Pages/Admin/Services/SingleService"
+import VendorAddService from "../../Pages/Vendor/Services/VendorAddService"
 
 export default function SiteNavigation() {
     const { GlobalElement, AdminElement, VendorElement, CustomerElement, ActiveVndor } = useUserContext()
@@ -50,6 +51,7 @@ export default function SiteNavigation() {
                 <Route path="vendor" element={<VendorElement><VendorHome /></VendorElement>} />
                 <Route path="vendor/activity" element={<VendorElement><VendorActivityLog /></VendorElement>} />
                 <Route path="vendor/services" element={<VendorElement><ActiveVndor><VendorServices /></ActiveVndor></VendorElement>} />
+                <Route path="vendor/services/add" element={<VendorElement><ActiveVndor><VendorAddService /></ActiveVndor></VendorElement>} />
                 {/* customer */}
                 <Route path="customer" element={<CustomerElement><CustomerHome /></CustomerElement>} />
             </Routes>

@@ -266,7 +266,7 @@ export const UserContextProvider = ({ children }) => {
    
 
     return (
-        <UserContext.Provider value={{ setIsLoading, API_END_POINT, GlobalElement, AdminElement, VendorElement, ActiveVndor, CustomerElement, signOut, isLoading, handleSignIn, handleForgotPassword, handleResetPassword, handleSignUp, CURRENT_USER, postActivityLog }}>
+        <UserContext.Provider value={{ setIsLoading, API_END_POINT, GlobalElement, AdminElement, VendorElement, ActiveVndor, CustomerElement, signOut, isLoading, handleSignIn, handleForgotPassword, handleResetPassword, handleSignUp, CURRENT_USER, postActivityLog, DECODED_CURRENT_USER_Active_STATUS }}>
             {children}
         </UserContext.Provider>
     )

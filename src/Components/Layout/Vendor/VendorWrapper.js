@@ -4,8 +4,10 @@ import UserNavigation from "../Navigation/UserNavigation"
 import { AiOutlineHome } from "react-icons/ai";
 import { TbChartHistogram } from "react-icons/tb";
 import { FiFeather } from "react-icons/fi";
+import { useUserContext } from "../../../Context/User/UserContext";
 
 export default function VendorWrapper({ children }) {
+    const {DECODED_CURRENT_USER_Active_STATUS} = useUserContext()
     const homeIcon = () => {
         return <AiOutlineHome />
     }
@@ -15,7 +17,7 @@ export default function VendorWrapper({ children }) {
     const serviceIcon = () => {
         return <FiFeather />
     }
-    const VENDOR_NAV = [
+    const VENDOR_NAV =  [
         {
             page:"Home",
             link:"/vendor",
@@ -45,11 +47,12 @@ export default function VendorWrapper({ children }) {
             icon:activityIcon()
         }
     ]
+    const activeNav = DECODED_CURRENT_USER_Active_STATUS?.isActive ? VENDOR_NAV : VENDOR_NAV.filter((item, index) => index !== 1)
     return (
         <div className="site-layout">
             <Header />
             <div className="flex flex-col md:flex-row md:items-start w-full bg-gray-light min-h-screen">
-                <UserNavigation NAV={VENDOR_NAV} />
+                <UserNavigation NAV={activeNav} />
                 <MainContent>
                     <>{children}</>
                 </MainContent>
