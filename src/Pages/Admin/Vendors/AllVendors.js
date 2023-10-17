@@ -11,11 +11,13 @@ import { useNavigate } from "react-router";
 import Rectangle from "../../../Components/Sklaton/Rectangle";
 import { CSVLink } from "react-csv";
 import { BiCloudDownload } from 'react-icons/bi';
+import { useUserContext } from "../../../Context/User/UserContext";
 
 
 export default function AllVendors() {
     const navigate = useNavigate()
     const { fetchVendors, vendors, setVendors } = useRootContext()
+    const {isLoading} = useUserContext()
     useEffect(() => {
         fetchVendors()
         return () => setVendors([])
@@ -47,7 +49,7 @@ export default function AllVendors() {
         return `${rowData.firstName} ${rowData.lastName}`
     }
 
-
+    console.log("isLoading", isLoading)
     return (
         <AdminWarpper>
             <div className="mb-6">
@@ -64,7 +66,7 @@ export default function AllVendors() {
                 </div>
             </div>
             <div className="bg-white-color rounded-md shadow-md p-4">
-                {vendorsDesc.length === 0 ? <Rectangle /> :
+                {isLoading ? <Rectangle /> :
                     <div>
                         <DataTable value={vendorsDesc} className="w-full" tableStyle={{ minWidth: '100%' }} paginator rows={10} rowsPerPageOptions={[10, 20, 30, 40, 50]} onRowSelect={onRowSelect} selectionMode="single">
                             <Column sortable field="_id" header="#id" className="text-xs py-4 my-2 text-left border-b border-gray-light3"></Column>

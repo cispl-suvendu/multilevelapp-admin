@@ -219,7 +219,7 @@ export const UserContextProvider = ({ children }) => {
             setIsLoading(false)
             sessionStorage.setItem("userInfo", JSON.stringify(res_data));
             try {
-                await postActivityLog({ ...res_data, CURRENT_PAGE_TYPE, message: `Account created with ${res_data.email}` })
+                await postActivityLog({ _id:res_data._id, token:res_data.token, CURRENT_PAGE_TYPE, message: `Account created with ${res_data.email}` })
             } catch (error) {
                 toast.error(error.message);
             }
