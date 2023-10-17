@@ -38,7 +38,7 @@ export const RootContextProvider = ({ children }) => {
                 .catch((error) => {
                     toast.error(error.message);
                 });
-            setIsLoading(false)
+                setIsLoading(false)
 
         } catch (error) {
             toast.error(error.message);
