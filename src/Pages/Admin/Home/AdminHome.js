@@ -5,10 +5,11 @@ import CountUp from 'react-countup';
 import { AiOutlineShop } from "react-icons/ai";
 import { FiFeather } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { Skeleton } from 'primereact/skeleton';
 
 
 export default function AdminHome() {
-  const { fetchVendors, vendors, setVendors, allServiceCat, setAllServiceCat, fetchAllServices } = useRootContext()
+  const { fetchVendors, vendors, setVendors, allServiceCat, setAllServiceCat, fetchAllServices_Category, LOADING } = useRootContext()
 
   useEffect(() => {
     fetchVendors()
@@ -16,7 +17,7 @@ export default function AdminHome() {
   }, [])
 
   useEffect(() => {
-    fetchAllServices()
+    fetchAllServices_Category()
     return () => setAllServiceCat([])
   }, [])
 
@@ -35,7 +36,7 @@ export default function AdminHome() {
             <div className="font-bold text-sm">All Vendors</div>
             <AiOutlineShop className="text-3xl text-active-color" />
           </div>
-          <div className="flex justify-between items-center pt-2">
+          {LOADING ? <Skeleton /> : <div className="flex justify-between items-center pt-2">
             <div>
               <CountUp
                 end={activeVendors.length}
@@ -46,14 +47,14 @@ export default function AdminHome() {
               />
             </div>
             <Link to="/admin/vendors" className="text-xs text-gray-dark hover:text-active-color">View all</Link>
-          </div>
+          </div>}
         </div>
         <div className="bg-white-color rounded-md shadow-md p-4 w-full md:w-3/12 text-text-color">
           <div className="flex justify-between items-center border-b border-gray-light3 pb-2 mb-2">
             <div className="font-bold text-sm">Service Category</div>
             <FiFeather className="text-3xl text-active-color" />
           </div>
-          <div className="flex justify-between items-center pt-2">
+          {LOADING ? <Skeleton /> : <div className="flex justify-between items-center pt-2">
             <div>
               <CountUp
                 end={activServiceCat.length}
@@ -64,7 +65,7 @@ export default function AdminHome() {
               />
             </div>
             <Link to="/admin/services" className="text-xs text-gray-dark hover:text-active-color">View all</Link>
-          </div>
+          </div>}
         </div>
       </div>
     </AdminWarpper>

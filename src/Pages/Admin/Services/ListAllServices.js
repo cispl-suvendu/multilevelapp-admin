@@ -16,10 +16,10 @@ export default function AdminListAllServices() {
     
     const navigate = useNavigate()
 
-    const {allServiceCat,  setAllServiceCat, fetchAllServices} = useRootContext()
+    const {allServiceCat,  setAllServiceCat, fetchAllServices_Category} = useRootContext()
  
     useEffect(() => {
-        fetchAllServices()
+        fetchAllServices_Category()
         return()=> setAllServiceCat([])
     },[])
 

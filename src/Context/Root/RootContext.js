@@ -13,6 +13,7 @@ export const RootContextProvider = ({ children }) => {
     const [adminActivity, setAdminActivity] = useState([])
     const [singleVendorData, setSingleVendorData] = useState(null)
     const [toggleMainNav, setToggleMainNav] = useState(false)
+    const [LOADING, setLOADING] = useState(false)
 
 
     const shitchNavStatus = () => {
@@ -20,7 +21,7 @@ export const RootContextProvider = ({ children }) => {
     }
 
     const fetchVendors = () => {
-        setIsLoading(true)
+        setLOADING(true)
         try {
             fetch(`${API_END_POINT}/admin/vendors`, {
                 method: "GET",
@@ -34,15 +35,17 @@ export const RootContextProvider = ({ children }) => {
                 })
                 .then(data => {
                     setVendors(data)
+                    setLOADING(false)
                 })
                 .catch((error) => {
                     toast.error(error.message);
+                    setLOADING(false)
                 });
-                setIsLoading(false)
-
+                
+                
         } catch (error) {
             toast.error(error.message);
-            setIsLoading(false)
+            setLOADING(false)
         }
     }
 
@@ -203,8 +206,8 @@ export const RootContextProvider = ({ children }) => {
 
     const [allServiceCat, setAllServiceCat] = useState([])
 
-    const fetchAllServices = () => {
-        setIsLoading(true)
+    const fetchAllServices_Category = () => {
+        setLOADING(true)
         try {
             fetch(`${API_END_POINT}/${CURRENT_USER?.role.toLowerCase()}/services/cat`, {
                 method: "GET",
@@ -218,15 +221,16 @@ export const RootContextProvider = ({ children }) => {
                 })
                 .then(data => {
                     setAllServiceCat(data)
+                    setLOADING(false)
                 })
                 .catch((error) => {
                     toast.error(error.message);
+                    setLOADING(false)
                 });
-            setIsLoading(false)
 
         } catch (error) {
             toast.error(error.message);
-            setIsLoading(false)
+            setLOADING(false)
         }
     }
 
@@ -347,7 +351,7 @@ export const RootContextProvider = ({ children }) => {
     const [allService, setAllService] = useState([])
 
     const fetchAllServices_AS_VENDOR = () => {
-        setIsLoading(true)
+        setLOADING(true)
         try {
             fetch(`${API_END_POINT}/vendor/services/createdby/${CURRENT_USER._id}`, {
                 method: "GET",
@@ -361,22 +365,23 @@ export const RootContextProvider = ({ children }) => {
                 })
                 .then(data => {
                     setAllService(data)
+                    setLOADING(false)
                 })
                 .catch((error) => {
                     toast.error(error.message);
+                    setLOADING(false)
                 });
-            setIsLoading(false)
 
         } catch (error) {
             toast.error(error.message);
-            setIsLoading(false)
+            setLOADING(false)
         }
     }
 
 
 
     return (
-        <RootContext.Provider value={{ fetchVendors, vendors, vendorActivity, fetchVendorActivity, adminActivity, fetchAdminActivity, fetchSingleVendor_AS_ADMIN, singleVendorData, setSingleVendorData, setVendorActivity, setVendors, setAdminActivity, updateVendorStatus, shitchNavStatus, toggleMainNav, handleAddServiceCat, allServiceCat, setAllServiceCat, fetchAllServices, singleServiceData, setSingleServiceData, fetchSingleServiceCat_AS_ADMIN, updateSingleSeriveCat_As_Admin, handleAddService, allService, setAllService, fetchAllServices_AS_VENDOR }}>
+        <RootContext.Provider value={{LOADING, fetchVendors, vendors, vendorActivity, fetchVendorActivity, adminActivity, fetchAdminActivity, fetchSingleVendor_AS_ADMIN, singleVendorData, setSingleVendorData, setVendorActivity, setVendors, setAdminActivity, updateVendorStatus, shitchNavStatus, toggleMainNav, handleAddServiceCat, allServiceCat, setAllServiceCat, fetchAllServices_Category, singleServiceData, setSingleServiceData, fetchSingleServiceCat_AS_ADMIN, updateSingleSeriveCat_As_Admin, handleAddService, allService, setAllService, fetchAllServices_AS_VENDOR }}>
             {children}
         </RootContext.Provider>
     )

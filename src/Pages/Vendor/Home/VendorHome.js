@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 import { FiFeather, FiUserCheck } from "react-icons/fi";
 import { useRootContext } from "../../../Context/Root/RootContext";
 import { useEffect } from "react";
+import { Skeleton } from 'primereact/skeleton';
 
 export default function VendorHome() {
   const { DECODED_CURRENT_USER_Active_STATUS } = useUserContext()
-  const { allService, setAllService, fetchAllServices_AS_VENDOR } = useRootContext()
+  const { allService, setAllService, fetchAllServices_AS_VENDOR, LOADING } = useRootContext()
   useEffect(() => {
     fetchAllServices_AS_VENDOR()
     return () => {
@@ -33,18 +34,19 @@ export default function VendorHome() {
               <div className="font-bold text-sm">Services</div>
               <FiFeather className="text-3xl text-active-color" />
             </div>
-            <div className="flex justify-between items-center pt-2">
-              <div>
-                <CountUp
-                  end={activeSerices.length}
-                  className="font-bold text-3xl"
-                /> /  <CountUp
-                  end={allService.length}
-                  className="font-bold text-sm text-gray-dark"
-                />
-              </div>
-              <Link to="/vendor/services" className="text-xs text-gray-dark hover:text-active-color">View all</Link>
-            </div>
+            {LOADING ? <Skeleton height="2rem"></Skeleton> :
+              <div className="flex justify-between items-center pt-2">
+                <div>
+                  <CountUp
+                    end={activeSerices.length}
+                    className="font-bold text-3xl"
+                  /> /  <CountUp
+                    end={allService.length}
+                    className="font-bold text-sm text-gray-dark"
+                  />
+                </div>
+                <Link to="/vendor/services" className="text-xs text-gray-dark hover:text-active-color">View all</Link>
+              </div>}
           </div>
           <div className="bg-white-color rounded-md shadow-md p-4 w-full md:w-3/12 text-text-color">
             <div className="flex justify-between items-center border-b border-gray-light3 pb-2 mb-2">

@@ -15,7 +15,7 @@ import { BiCloudDownload } from 'react-icons/bi';
 
 export default function AllVendors() {
     const navigate = useNavigate()
-    const { fetchVendors, vendors, setVendors } = useRootContext()
+    const { fetchVendors, vendors, setVendors, LOADING } = useRootContext()
     useEffect(() => {
         fetchVendors()
         return () => {
@@ -48,7 +48,7 @@ export default function AllVendors() {
     const nameTemplete = (rowData) => {
         return `${rowData.firstName} ${rowData.lastName}`
     }
-
+    
 
     return (
         <AdminWarpper>
@@ -66,7 +66,7 @@ export default function AllVendors() {
                 </div>
             </div>
             <div className="bg-white-color rounded-md shadow-md p-4">
-                {vendorsDesc.length === 0 ? <Rectangle /> :
+                {LOADING ? <Rectangle /> :
                     <div>
                         <DataTable value={vendorsDesc} className="w-full" tableStyle={{ minWidth: '100%' }} paginator rows={10} rowsPerPageOptions={[10, 20, 30, 40, 50]} onRowSelect={onRowSelect} selectionMode="single">
                             <Column sortable field="_id" header="#id" className="text-xs py-4 my-2 text-left border-b border-gray-light3"></Column>

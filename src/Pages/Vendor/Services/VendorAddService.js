@@ -24,10 +24,10 @@ const serviceSchema = Yup.object().shape({
 });
 
 export default function VendorAddService() {
-  const { allServiceCat, setAllServiceCat, fetchAllServices, handleAddService } = useRootContext()
+  const { allServiceCat, setAllServiceCat, fetchAllServices_Category, handleAddService } = useRootContext()
   const { isLoading } = useUserContext()
   useEffect(() => {
-    fetchAllServices()
+    fetchAllServices_Category()
     return () => setAllServiceCat([])
   }, [])
 
