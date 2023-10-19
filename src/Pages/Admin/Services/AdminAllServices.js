@@ -12,11 +12,11 @@ import { useRootContext } from "../../../Context/Root/RootContext";
 import { useEffect } from "react";
 
 export default function AdminAllServices() {
-  const {adminViewAllServices, setAdminViewAllServices, fetchAllServices_AS_ADMIN, LOADING} = useRootContext()
+  const { adminViewAllServices, setAdminViewAllServices, fetchAllServices_AS_ADMIN, LOADING } = useRootContext()
   useEffect(() => {
     fetchAllServices_AS_ADMIN()
-    return()=> setAdminViewAllServices([])
-  },[])
+    return () => setAdminViewAllServices([])
+  }, [])
 
   const adminViewAllServicesInReverseOrder = adminViewAllServices.sort().reverse()
 
@@ -62,10 +62,20 @@ export default function AdminAllServices() {
 
   return (
     <AdminWarpper>
-        <div className="mb-6">
-            <h1 className="text-md font-bold">All Services</h1>
+      <div className="mb-6">
+        <h1 className="text-md font-bold">All Services</h1>
+        <div className="flex justify-end">
+          <CSVLink
+            data={adminViewAllServicesInReverseOrder}
+            filename={"service-list.csv"}
+            className="flex gap-1 font-bold items-center hover:text-active-color"
+          >
+            <BiCloudDownload className="text-active-color text-xl" />
+            <span className="text-xs">Download CSV</span>
+          </CSVLink>
         </div>
-        <div className="bg-white-color rounded-md shadow-md p-4">
+      </div>
+      <div className="bg-white-color rounded-md shadow-md p-4">
         {LOADING ? <Rectangle /> :
           <div>
             <DataTable value={adminViewAllServicesInReverseOrder} className="w-full" tableStyle={{ minWidth: '100%' }} paginator rows={10} rowsPerPageOptions={[10, 20, 30, 40, 50]} onRowSelect={onRowSelect} selectionMode="single">

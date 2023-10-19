@@ -10,9 +10,7 @@ import ImageUploading from 'react-images-uploading';
 import { BsCloudUploadFill } from 'react-icons/bs';
 import { BiEdit } from 'react-icons/bi';
 import { MdRemoveCircleOutline } from 'react-icons/md';
-
-
-
+import Select from 'react-select';
 
 const serviceSchema = Yup.object().shape({
   name: Yup.string()
@@ -40,6 +38,7 @@ export default function VendorAddService() {
     setImages(imageList);
   };
 
+  const catActiveList = allServiceCat.filter(cat => cat.catstatus === true).map(cat => ({ value: cat._id, label: cat.name }))
 
   return (
     <VendorWrapper>
@@ -84,11 +83,45 @@ export default function VendorAddService() {
                     <label className="font-bold text-text-color text-xs block mb-2">
                       Description
                     </label>
-                    <ReactQuill theme="snow" value={description} onChange={setDescription} />
+                    <div className="bg-gray-light2 p-8 rounded">
+                      <ReactQuill theme="snow" value={description} onChange={setDescription} className="bg-white-color" />
+                    </div>
                   </div>
-                  <div className="w-full mb-4">
+                </div>
+                <div className="my-6 w-full">
+                  {errors.name && touched.name ? <div className="bg-error-color px-4 py-1 text-white-color text-sm font-bold my-2 rounded-sm capitalize">{errors.name}</div> : null}
+                  {errors.catId && touched.catId ? <div className="bg-error-color px-4 py-1 text-white-color text-sm font-bold my-2 rounded-sm capitalize">{errors.catId}</div> : null}
+                  {errors.cost && touched.cost ? <div className="bg-error-color px-4 py-1 text-white-color text-sm font-bold my-2 rounded-sm capitalize">{errors.cost}</div> : null}
+                  <button
+                    className="rounded bg-active-color text-white px-12 py-3 font-bold text-white-color disabled:bg-gray-light3 disabled:cursor-not-allowed"
+                    type="submit"
+                    disabled={isLoading}
+                  >{isLoading ? 'Please wait...' : 'Add'}</button>
+                </div>
+              </div>
+              <div className="w-full md:w-1/3 text-text-color">
+                <div className="bg-white-color rounded-md shadow-md p-4">
+                  <div className="font-bold text-sm border-b border-gray-light3 pb-2 mb-2">Category Details</div>
+                  <div className="my-6">
+                    <div className="w-full">
+                      <label className="font-bold text-text-color text-xs block mb-2">
+                        Category
+                      </label>
+                      <Select
+                        defaultValue="Select Category"
+                        isSearchable={true}
+                        name="catId"
+                        options={catActiveList}
+                        onChange={({ value }) => setFieldValue("catId", value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white-color rounded-md shadow-md p-4 mt-6">
+                  <div className="font-bold text-sm border-b border-gray-light3 pb-2 mb-2">Images</div>
+                  <div className="w-full my-6">
                     <label className="font-bold text-text-color text-xs block mb-2">
-                      Image (max limit 5)
+                      Max upload limit 5
                     </label>
                     <ImageUploading
                       multiple
@@ -135,32 +168,6 @@ export default function VendorAddService() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white-color rounded-md shadow-md p-4 w-full md:w-1/3 text-text-color">
-                <div className="font-bold text-sm border-b border-gray-light3 pb-2 mb-2">Category Details</div>
-                <div className="my-6">
-                  <div className="w-full">
-                    <label className="font-bold text-text-color text-xs block mb-2">
-                      Category
-                    </label>
-                    <Field as="select" name="catId" className="h-10 border border-gray-light3 w-full px-2 text-sm rounded-md text-gray-dark">
-                      <option value="">--Select Category--</option>
-                      {allServiceCat.filter(cat => cat.catstatus === true).map((cat => {
-                        return <option key={cat._id} value={cat._id}>{cat.name}</option>
-                      }))}
-                    </Field>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="my-6 w-full">
-              {errors.name && touched.name ? <div className="bg-error-color px-4 py-1 text-white-color text-sm font-bold my-2 rounded-sm capitalize">{errors.name}</div> : null}
-              {errors.catId && touched.catId ? <div className="bg-error-color px-4 py-1 text-white-color text-sm font-bold my-2 rounded-sm capitalize">{errors.catId}</div> : null}
-              {errors.cost && touched.cost ? <div className="bg-error-color px-4 py-1 text-white-color text-sm font-bold my-2 rounded-sm capitalize">{errors.cost}</div> : null}
-              <button
-                className="rounded bg-active-color text-white px-12 py-3 font-bold text-white-color disabled:bg-gray-light3 disabled:cursor-not-allowed"
-                type="submit"
-                disabled={isLoading}
-              >{isLoading ? 'Please wait...' : 'Add'}</button>
             </div>
           </Form>
         )}

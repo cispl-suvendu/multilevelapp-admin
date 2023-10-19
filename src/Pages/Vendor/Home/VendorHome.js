@@ -6,6 +6,7 @@ import { FiFeather, FiUserCheck } from "react-icons/fi";
 import { useRootContext } from "../../../Context/Root/RootContext";
 import { useEffect } from "react";
 import { Skeleton } from 'primereact/skeleton';
+import DashBoardTable from "../../../Components/Table/DashBoardTable";
 
 export default function VendorHome() {
   const { DECODED_CURRENT_USER_Active_STATUS } = useUserContext()
@@ -28,42 +29,71 @@ export default function VendorHome() {
           <p className="text-white-color my-4 text-sm">Please be aware that your account has been successfully created but is currently undergoing verification. Our administrative team will promptly review and verify your account. Once the verification process is complete, you will be able to add services to our platform. We kindly ask for your patience during this time. Please log in to your account again to check the activation status.</p>
           <p className="text-white-color text-sm italic">(The verification process is expected to take approximately 2-4 hours.)</p>
         </div>
-        : <div className="flex flex-col md:flex-row gap-6">
-          <div className="bg-white-color rounded-md shadow-md p-4 w-full md:w-3/12 text-text-color">
-            <div className="flex justify-between items-center border-b border-gray-light3 pb-2 mb-2">
-              <div className="font-bold text-sm">Services</div>
-              <FiFeather className="text-3xl text-active-color" />
-            </div>
-            {LOADING ? <Skeleton height="2rem"></Skeleton> :
-              <div className="flex justify-between items-center pt-2">
-                <div>
-                  <CountUp
-                    end={activeSerices.length}
-                    className="font-bold text-3xl"
-                  /> /  <CountUp
-                    end={vendorAllService.length}
-                    className="font-bold text-sm text-gray-dark"
-                  />
-                </div>
-                <Link to="/vendor/services" className="text-xs text-gray-dark hover:text-active-color">View all</Link>
-              </div>}
-          </div>
-          <div className="bg-white-color rounded-md shadow-md p-4 w-full md:w-3/12 text-text-color">
-            <div className="flex justify-between items-center border-b border-gray-light3 pb-2 mb-2">
-              <div className="font-bold text-sm">Customers</div>
-              <FiUserCheck className="text-3xl text-active-color" />
-            </div>
-            <div className="flex justify-between items-center pt-2">
-              <div>
-                <CountUp
-                  end={0}
-                  className="font-bold text-3xl"
-                /> /  <CountUp
-                  end={0}
-                  className="font-bold text-sm text-gray-dark"
-                />
+        : <div>
+          <div className="flex flex-col md:flex-row gap-6 flex-wrap">
+            <div className="bg-white-color rounded-md shadow-md p-4 w-full flex-1 text-text-color">
+              <div className="flex justify-between items-center border-b border-gray-light3 pb-2 mb-2">
+                <div className="font-bold text-sm">Services</div>
+                <FiFeather className="text-3xl text-active-color" />
               </div>
-              <Link to="/vendor/customers" className="text-xs text-gray-dark hover:text-active-color">View all</Link>
+              {LOADING ? <Skeleton height="2rem"></Skeleton> :
+                <div className="flex justify-between items-center pt-2">
+                  <div>
+                    <CountUp
+                      end={activeSerices.length}
+                      className="font-bold text-3xl"
+                    /> /  <CountUp
+                      end={vendorAllService.length}
+                      className="font-bold text-sm text-gray-dark"
+                    />
+                  </div>
+                  <Link to="/vendor/services" className="text-xs text-gray-dark hover:text-active-color">View all</Link>
+                </div>}
+            </div>
+            <div className="bg-white-color rounded-md shadow-md p-4 w-full flex-1 text-text-color">
+              <div className="flex justify-between items-center border-b border-gray-light3 pb-2 mb-2">
+                <div className="font-bold text-sm">Customers</div>
+                <FiUserCheck className="text-3xl text-active-color" />
+              </div>
+              {LOADING ? <Skeleton height="2rem"></Skeleton> :
+                <div className="flex justify-between items-center pt-2">
+                  <div>
+                    <CountUp
+                      end={0}
+                      className="font-bold text-3xl"
+                    /> /  <CountUp
+                      end={0}
+                      className="font-bold text-sm text-gray-dark"
+                    />
+                  </div>
+                  <Link to="/vendor/customers" className="text-xs text-gray-dark hover:text-active-color">View all</Link>
+                </div>}
+            </div>
+          </div>
+          <div className="mt-12 flex flex-col md:flex-row gap-6 flex-wrap">
+            <div className="bg-white-color rounded-md shadow-md p-4 w-full flex-1 text-text-color">
+              {LOADING ? <Skeleton /> : <DashBoardTable
+                title="Recently created services"
+                data={vendorAllService.slice(-5).sort().reverse()}
+                field1={{ field: "_id", header: "#id" }}
+                field2={{ field: "name", header: "Name" }}
+                field3={{ field: "category.name", header: "Category" }}
+                field4={{ field: "servicestatus", header: "Status" }}
+                viewAll="/vendor/services"
+                singleLink="/vendor/service"
+              />}
+            </div>
+            <div className="bg-white-color rounded-md shadow-md p-4 w-full flex-1 text-text-color">
+              {LOADING ? <Skeleton /> : <DashBoardTable
+                title="Last 5 customer"
+                data=""
+                field1={{ field: "_id", header: "#id" }}
+                field2={{ field: "name", header: "Name" }}
+                field3={{ field: "caturl", header: "Alice" }}
+                field4={{ field: "catstatus", header: "Status" }}
+                viewAll="/admin/services/category"
+                singleLink="/admin/service/category"
+              />}
             </div>
           </div>
         </div>

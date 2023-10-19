@@ -11,3 +11,16 @@ body{
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Space Grotesk', sans-serif;
 }
+
+.quill{
+    border-radius: 12px;
+}
+
+.ql-editor{
+    min-height:200px;
+}
+
+.ql-container,
+.ql-toolbar{
+    border: none !important;
+}

@@ -28,7 +28,7 @@ export default function AddServiceCat({addServiceCat}) {
                         </label>
                         <Field name="name" className="h-10 border border-gray-light3 w-full px-2 text-sm rounded-md text-gray-dark" onChange={(e) => {
                             setFieldValue("name", e.target.value);
-                            setFieldValue("caturl", e.target.value?.trim().replace(/\s/g, "-").toLocaleLowerCase());
+                            setFieldValue("caturl", e.target.value?.trim().replace(/\W+(?!$)/g, "-").toLocaleLowerCase());
                         }} />
                     </div>
                     <div className="flex flex-col w-full mb-4">
