@@ -2,7 +2,7 @@ import AdminWarpper from "../../../Components/Layout/Admin/AdminWarpper"
 import { useRootContext } from "../../../Context/Root/RootContext";
 import AddServiceCat from "../../../Components/Service/Cat/AddServiceCat";
 
-export default function AdminAddService() {
+export default function AdminAddServiceCat() {
 
     const { handleAddServiceCat } = useRootContext()
 

@@ -41,8 +41,8 @@ export const RootContextProvider = ({ children }) => {
                     toast.error(error.message);
                     setLOADING(false)
                 });
-                
-                
+
+
         } catch (error) {
             toast.error(error.message);
             setLOADING(false)
@@ -152,6 +152,8 @@ export const RootContextProvider = ({ children }) => {
                     toast.success("Vendor Status Updated!")
                     try {
                         postActivityLog({ _id: CURRENT_USER._id, token: CURRENT_USER.token, CURRENT_PAGE_TYPE: "admin", message: `${data.firstName} ${data.lastName} Account status updated to ${data.isActive === true ? "Active" : "Inactive"}` })
+                        updateServiceStatusWIthVendorStatus({ id: data._id, servicestatus: data.isActive, vendor: `${data.firstName} ${data.lastName}` })
+
                     } catch (error) {
                         toast.error(error.message);
                     }
@@ -287,6 +289,7 @@ export const RootContextProvider = ({ children }) => {
                     toast.success(`Service category - ${data.name} updated successfully!`)
                     try {
                         postActivityLog({ _id: CURRENT_USER._id, token: CURRENT_USER.token, CURRENT_PAGE_TYPE: "admin", message: `Service category - ${data.name} updated successfully!` })
+                        updateServiceStatusWithCategoryStatus({ id: data._id, servicestatus: data.catstatus, category: data.name })
                     } catch (error) {
                         toast.error(error.message);
                     }
@@ -348,12 +351,12 @@ export const RootContextProvider = ({ children }) => {
 
     // fetch All service by vendor
 
-    const [allService, setAllService] = useState([])
+    const [vendorAllService, setVendorAllService] = useState([])
 
     const fetchAllServices_AS_VENDOR = () => {
         setLOADING(true)
         try {
-            fetch(`${API_END_POINT}/vendor/services/createdby/${CURRENT_USER._id}`, {
+            fetch(`${API_END_POINT}/vendor/services/groupby/createdby/${CURRENT_USER._id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -364,7 +367,7 @@ export const RootContextProvider = ({ children }) => {
                     return response.json()
                 })
                 .then(data => {
-                    setAllService(data)
+                    setVendorAllService(data)
                     setLOADING(false)
                 })
                 .catch((error) => {
@@ -378,10 +381,139 @@ export const RootContextProvider = ({ children }) => {
         }
     }
 
+    // fetch All service by Admin
 
+    const [adminViewAllServices, setAdminViewAllServices] = useState([])
+
+    const fetchAllServices_AS_ADMIN = async () => {
+        setLOADING(true)
+        try {
+            const res = await fetch(`${API_END_POINT}/admin/services/all`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${CURRENT_USER.token}`
+                }
+            })
+            if (res.ok) {
+                const data = await res.json()
+                setAdminViewAllServices(data)
+                setLOADING(false)
+            }
+            setLOADING(false)
+
+        } catch (error) {
+            toast.error(error.message);
+            setLOADING(false)
+        }
+    }
+
+    // update Single Service // not implemented yet
+
+    const [singleServiceByVendor, setSingleServiceByVendor] = useState(null)
+
+    async function updateSingleService({ _id, name, cost, description, images, category, servicestatus }) {
+        setLOADING(true)
+        try {
+            const res = await fetch(`${API_END_POINT}/vendor/service/edit/${_id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${CURRENT_USER.token}`
+                },
+                body: JSON.stringify({
+                    name,
+                    cost,
+                    description,
+                    images,
+                    category,
+                    servicestatus
+                })
+            })
+
+            if (res.ok) {
+                const data = await res.json()
+                setSingleServiceByVendor(data)
+                setLOADING(false)
+            }
+            setLOADING(false)
+        } catch (error) {
+            toast.error(error.message);
+            setLOADING(false)
+        }
+    }
+
+    // update services status with vendor status
+
+    async function updateServiceStatusWIthVendorStatus({ id, servicestatus, vendor }) {
+        try {
+            const allServices = await fetch(`${API_END_POINT}/admin/services/groupby/createdby/${id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${CURRENT_USER.token}`
+                }
+            })
+
+            if (allServices.ok) {
+                const allServicesRes = await allServices.json()
+                const filterAllServices = await allServicesRes.filter(item => item.category.catstatus === true).map(item => item._id)
+                const res = await fetch(`${API_END_POINT}/admin/services/groupby/vendor/edit`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "authorization": `Bearer ${CURRENT_USER.token}`
+                    },
+                    body: JSON.stringify({
+                        servicestatus,
+                        serviceIds: filterAllServices
+                    })
+                })
+                if (res.ok) {
+                    toast.success(`All the Service added by ${vendor} is now ${servicestatus === true ? "Active" : "Inactive"} successfully!`)
+                }
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+    }
+
+    // update services status with category status
+
+    async function updateServiceStatusWithCategoryStatus({ id, servicestatus, category }) {
+        try {
+            const serviceUnderCat = await fetch(`${API_END_POINT}/admin/services/groupby/category/${id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${CURRENT_USER.token}`
+                }
+            })
+            if (serviceUnderCat.ok) {
+                const serviceUnderCatRes = await serviceUnderCat.json()
+                const filterServiceUnderCat = await serviceUnderCatRes.filter(item => item.createdBy.isActive === true).map(item => item._id)
+                const res = await fetch(`${API_END_POINT}/admin/services/groupby/category/edit`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "authorization": `Bearer ${CURRENT_USER.token}`
+                    },
+                    body: JSON.stringify({
+                        servicestatus,
+                        serviceIds: filterServiceUnderCat
+                    })
+                })
+                if (res.ok) {
+                    toast.success(`All the Service under ${category} category is now ${servicestatus === true ? "Active" : "Inactive"} successfully!`)
+                }
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+    }
 
     return (
-        <RootContext.Provider value={{LOADING, fetchVendors, vendors, vendorActivity, fetchVendorActivity, adminActivity, fetchAdminActivity, fetchSingleVendor_AS_ADMIN, singleVendorData, setSingleVendorData, setVendorActivity, setVendors, setAdminActivity, updateVendorStatus, shitchNavStatus, toggleMainNav, handleAddServiceCat, allServiceCat, setAllServiceCat, fetchAllServices_Category, singleServiceData, setSingleServiceData, fetchSingleServiceCat_AS_ADMIN, updateSingleSeriveCat_As_Admin, handleAddService, allService, setAllService, fetchAllServices_AS_VENDOR }}>
+        <RootContext.Provider value={{ LOADING, fetchVendors, vendors, vendorActivity, fetchVendorActivity, adminActivity, fetchAdminActivity, fetchSingleVendor_AS_ADMIN, singleVendorData, setSingleVendorData, setVendorActivity, setVendors, setAdminActivity, updateVendorStatus, shitchNavStatus, toggleMainNav, handleAddServiceCat, allServiceCat, setAllServiceCat, fetchAllServices_Category, singleServiceData, setSingleServiceData, fetchSingleServiceCat_AS_ADMIN, updateSingleSeriveCat_As_Admin, handleAddService, vendorAllService, setVendorAllService, fetchAllServices_AS_VENDOR, adminViewAllServices, setAdminViewAllServices, fetchAllServices_AS_ADMIN }}>
             {children}
         </RootContext.Provider>
     )

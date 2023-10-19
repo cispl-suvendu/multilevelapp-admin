@@ -4,6 +4,8 @@ import UserNavigation from "../Navigation/UserNavigation"
 import { AiOutlineHome, AiOutlineShop } from "react-icons/ai";
 import { TbChartHistogram } from "react-icons/tb";
 import { FiFeather } from "react-icons/fi";
+import { MdOutlineWorkHistory } from "react-icons/md";
+
 
 export default function AdminWarpper({ children }) {
     const homeIcon = () => {
@@ -17,6 +19,10 @@ export default function AdminWarpper({ children }) {
     }
 
     const serviceIcon = () => {
+        return <MdOutlineWorkHistory />
+    }
+
+    const serviceCatIcon = () => {
         return <FiFeather />
     }
 
@@ -32,20 +38,25 @@ export default function AdminWarpper({ children }) {
             icon:vendorIcon()
         },
         {
-            page:"Services Category",
+            page:"Services",
             link:"/admin/services",
-            icon:serviceIcon(),
+            icon:serviceIcon()
+        },
+        {
+            page:"Services Category",
+            link:"/admin/services/category",
+            icon:serviceCatIcon(),
             hasSub:true,
             subMenu:[
                 {
                     page:"All Category",
-                    link:"/admin/services",
-                    icon:serviceIcon()
+                    link:"/admin/services/category",
+                    icon:serviceCatIcon()
                 },
                 {
                     page:"Add Category",
-                    link:"/admin/services/add",
-                    icon:serviceIcon()
+                    link:"/admin/services/category/add",
+                    icon:serviceCatIcon()
                 }
             ]
         },

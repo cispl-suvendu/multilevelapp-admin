@@ -9,14 +9,14 @@ import { Skeleton } from 'primereact/skeleton';
 
 export default function VendorHome() {
   const { DECODED_CURRENT_USER_Active_STATUS } = useUserContext()
-  const { allService, setAllService, fetchAllServices_AS_VENDOR, LOADING } = useRootContext()
+  const { vendorAllService, setVendorAllService, fetchAllServices_AS_VENDOR, LOADING } = useRootContext()
   useEffect(() => {
     fetchAllServices_AS_VENDOR()
     return () => {
-      setAllService([])
+      setVendorAllService([])
     }
   }, [])
-  const activeSerices = allService.filter(item => item.servicestatus === true)
+  const activeSerices = vendorAllService.filter(item => item.servicestatus === true)
   return (
     <VendorWrapper>
       <div className="mb-6">
@@ -41,7 +41,7 @@ export default function VendorHome() {
                     end={activeSerices.length}
                     className="font-bold text-3xl"
                   /> /  <CountUp
-                    end={allService.length}
+                    end={vendorAllService.length}
                     className="font-bold text-sm text-gray-dark"
                   />
                 </div>

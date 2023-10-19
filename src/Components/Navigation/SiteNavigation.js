@@ -18,10 +18,11 @@ import VendorActivityLog from "../../Pages/Vendor/ActivityLog/VendorActivityLog"
 import AdminActivityLog from "../../Pages/Admin/ActivityLog/AdminActivityLog"
 import SingleVendorAdminView from "../../Pages/Admin/Vendors/SingleVendor"
 import VendorServices from "../../Pages/Vendor/Services/VendorServices"
-import AdminAddService from "../../Pages/Admin/Services/AddService"
-import AdminListAllServices from "../../Pages/Admin/Services/ListAllServices"
-import AdminSingleService from "../../Pages/Admin/Services/SingleService"
+import AdminAddServiceCat from "../../Pages/Admin/Category/AddCategory"
+import AdminListAllServicesCat from "../../Pages/Admin/Category/ListAllCategorys"
+import AdminSingleServiceCat from "../../Pages/Admin/Category/SingleCategory"
 import VendorAddService from "../../Pages/Vendor/Services/VendorAddService"
+import AdminAllServices from "../../Pages/Admin/Services/AdminAllServices"
 
 export default function SiteNavigation() {
     const { GlobalElement, AdminElement, VendorElement, CustomerElement, ActiveVndor } = useUserContext()
@@ -44,9 +45,10 @@ export default function SiteNavigation() {
                 <Route path="admin/vendors" element={<AdminElement><AllVendors /></AdminElement>} />
                 <Route path="admin/activity" element={<AdminElement><AdminActivityLog /></AdminElement>} />
                 <Route path="admin/vendor/:id" element={<AdminElement><SingleVendorAdminView /></AdminElement>} />
-                <Route path="admin/services/add" element={<AdminElement><AdminAddService /></AdminElement>} />
-                <Route path="admin/services" element={<AdminElement><AdminListAllServices /></AdminElement>} />
-                <Route path="admin/service/:id" element={<AdminElement><AdminSingleService /></AdminElement>} />
+                <Route path="admin/services/category/add" element={<AdminElement><AdminAddServiceCat /></AdminElement>} />
+                <Route path="admin/services/category" element={<AdminElement><AdminListAllServicesCat /></AdminElement>} />
+                <Route path="admin/service/category/:id" element={<AdminElement><AdminSingleServiceCat /></AdminElement>} />
+                <Route path="admin/services" element={<AdminElement><AdminAllServices /></AdminElement>} />
                 {/* Vendor */}
                 <Route path="vendor" element={<VendorElement><VendorHome /></VendorElement>} />
                 <Route path="vendor/activity" element={<VendorElement><VendorActivityLog /></VendorElement>} />

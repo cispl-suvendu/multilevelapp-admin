@@ -17,7 +17,7 @@ const catSchema = Yup.object().shape({
 });
 
 
-export default function AdminSingleService() {
+export default function AdminSingleServiceCat() {
 
     const { id } = useParams()
     const { isLoading } = useUserContext()

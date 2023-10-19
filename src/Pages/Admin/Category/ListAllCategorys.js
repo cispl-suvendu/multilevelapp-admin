@@ -12,7 +12,7 @@ import Rectangle from "../../../Components/Sklaton/Rectangle";
 import { CSVLink } from "react-csv";
 import { BiCloudDownload } from 'react-icons/bi';
 
-export default function AdminListAllServices() {
+export default function AdminListAllServicesCat() {
     
     const navigate = useNavigate()
 
@@ -30,7 +30,7 @@ export default function AdminListAllServices() {
     }
 
     const onRowSelect = (event) => {
-        navigate(`/admin/service/${event.data._id}`, {
+        navigate(`/admin/service/category/${event.data._id}`, {
             state: event.data
           })
     };
