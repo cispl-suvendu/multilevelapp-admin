@@ -31,7 +31,7 @@ export default function VendorAddService() {
 
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
-  const maxNumber = 5;
+  const maxNumber = 2;
 
   const handleImageUpload = (imageList, addUpdateIndex) => {
     //console.log("imageList", imageList, "addUpdateIndex", addUpdateIndex);
@@ -121,7 +121,7 @@ export default function VendorAddService() {
                   <div className="font-bold text-sm border-b border-gray-light3 pb-2 mb-2">Images</div>
                   <div className="w-full my-6">
                     <label className="font-bold text-text-color text-xs block mb-2">
-                      Max upload limit 5
+                      Max upload limit 2
                     </label>
                     <ImageUploading
                       multiple
@@ -148,11 +148,11 @@ export default function VendorAddService() {
                           >
                             <BsCloudUploadFill className="text-xl mr-2" /> Click or Drop here
                           </div>
-                          <div className="flex gap-4 my-4 flex-wrap">
+                          <div className="flex gap-4 my-4 flex-wrap justify-between">
                             {imageList.map((image, index) => (
-                              <div key={index} className="image-item">
+                              <div key={index} className="flex-1">
                                 <div className="border flex items-center justify-center p-4 rounded border-gray-light3">
-                                  <img src={image['data_url']} alt="" width="80" className="h-14 w-auto" />
+                                  <img src={image['data_url']} alt="" width="80" className="h-36 w-auto" />
                                 </div>
                                 <div className="flex justify-between p-2 text-md border border-gray-light3 rounded mt-2">
                                   <div onClick={() => onImageUpdate(index)} className="text-[green] cursor-pointer"><BiEdit /></div>
