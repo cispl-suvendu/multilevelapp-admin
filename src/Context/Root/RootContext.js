@@ -14,6 +14,7 @@ export const RootContextProvider = ({ children }) => {
     const [singleVendorData, setSingleVendorData] = useState(null)
     const [toggleMainNav, setToggleMainNav] = useState(false)
     const [LOADING, setLOADING] = useState(false)
+    const [serviceIsLoading, setServiceIsLoading] = useState(false)
 
 
     const shitchNavStatus = () => {
@@ -386,7 +387,7 @@ export const RootContextProvider = ({ children }) => {
     const [adminViewAllServices, setAdminViewAllServices] = useState([])
 
     const fetchAllServices_AS_ADMIN = async () => {
-        setLOADING(true)
+        setServiceIsLoading(true)
         try {
             const res = await fetch(`${API_END_POINT}/admin/services/all`, {
                 method: "GET",
@@ -398,13 +399,13 @@ export const RootContextProvider = ({ children }) => {
             if (res.ok) {
                 const data = await res.json()
                 setAdminViewAllServices(data)
-                setLOADING(false)
+                setServiceIsLoading(false)
             }
-            setLOADING(false)
+            setServiceIsLoading(false)
 
         } catch (error) {
             toast.error(error.message);
-            setLOADING(false)
+            setServiceIsLoading(false)
         }
     }
 
@@ -513,7 +514,7 @@ export const RootContextProvider = ({ children }) => {
     }
 
     return (
-        <RootContext.Provider value={{ LOADING, fetchVendors, vendors, vendorActivity, fetchVendorActivity, adminActivity, fetchAdminActivity, fetchSingleVendor_AS_ADMIN, singleVendorData, setSingleVendorData, setVendorActivity, setVendors, setAdminActivity, updateVendorStatus, shitchNavStatus, toggleMainNav, handleAddServiceCat, allServiceCat, setAllServiceCat, fetchAllServices_Category, singleServiceData, setSingleServiceData, fetchSingleServiceCat_AS_ADMIN, updateSingleSeriveCat_As_Admin, handleAddService, vendorAllService, setVendorAllService, fetchAllServices_AS_VENDOR, adminViewAllServices, setAdminViewAllServices, fetchAllServices_AS_ADMIN }}>
+        <RootContext.Provider value={{ LOADING, fetchVendors, vendors, vendorActivity, fetchVendorActivity, adminActivity, fetchAdminActivity, fetchSingleVendor_AS_ADMIN, singleVendorData, setSingleVendorData, setVendorActivity, setVendors, setAdminActivity, updateVendorStatus, shitchNavStatus, toggleMainNav, handleAddServiceCat, allServiceCat, setAllServiceCat, fetchAllServices_Category, singleServiceData, setSingleServiceData, fetchSingleServiceCat_AS_ADMIN, updateSingleSeriveCat_As_Admin, handleAddService, vendorAllService, setVendorAllService, fetchAllServices_AS_VENDOR, adminViewAllServices, setAdminViewAllServices, fetchAllServices_AS_ADMIN, serviceIsLoading }}>
             {children}
         </RootContext.Provider>
     )

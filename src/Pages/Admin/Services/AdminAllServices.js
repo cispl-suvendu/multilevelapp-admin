@@ -12,7 +12,7 @@ import { useRootContext } from "../../../Context/Root/RootContext";
 import { useEffect } from "react";
 
 export default function AdminAllServices() {
-  const { adminViewAllServices, setAdminViewAllServices, fetchAllServices_AS_ADMIN, LOADING } = useRootContext()
+  const { adminViewAllServices, setAdminViewAllServices, fetchAllServices_AS_ADMIN, serviceIsLoading } = useRootContext()
   useEffect(() => {
     fetchAllServices_AS_ADMIN()
     return () => setAdminViewAllServices([])
@@ -60,6 +60,8 @@ export default function AdminAllServices() {
     }
   }
 
+  console.log("serviceIsLoading", serviceIsLoading)
+
   return (
     <AdminWarpper>
       <div className="mb-6">
@@ -76,7 +78,7 @@ export default function AdminAllServices() {
         </div>
       </div>
       <div className="bg-white-color rounded-md shadow-md p-4">
-        {LOADING ? <Rectangle /> :
+        {serviceIsLoading ? <Rectangle /> :
           <div>
             <DataTable value={adminViewAllServicesInReverseOrder} className="w-full" tableStyle={{ minWidth: '100%' }} paginator rows={10} rowsPerPageOptions={[10, 20, 30, 40, 50]} onRowSelect={onRowSelect} selectionMode="single">
               <Column sortable field="_id" header="#id" className="text-xs py-4 my-2 text-left border-b border-gray-light3"></Column>

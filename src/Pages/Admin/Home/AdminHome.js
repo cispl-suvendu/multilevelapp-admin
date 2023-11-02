@@ -11,7 +11,7 @@ import DashBoardTable from "../../../Components/Table/DashBoardTable";
 
 
 export default function AdminHome() {
-  const { fetchVendors, vendors, setVendors, allServiceCat, setAllServiceCat, fetchAllServices_Category, LOADING, adminViewAllServices, setAdminViewAllServices, fetchAllServices_AS_ADMIN } = useRootContext()
+  const { fetchVendors, vendors, setVendors, allServiceCat, setAllServiceCat, fetchAllServices_Category, LOADING, adminViewAllServices, setAdminViewAllServices, fetchAllServices_AS_ADMIN, serviceIsLoading } = useRootContext()
 
   useEffect(() => {
     fetchVendors()
@@ -76,7 +76,7 @@ export default function AdminHome() {
             <div className="font-bold text-sm">Services</div>
             <MdOutlineWorkHistory className="text-3xl text-active-color" />
           </div>
-          {LOADING ? <Skeleton /> : <div className="flex justify-between items-center pt-2">
+          {serviceIsLoading ? <Skeleton /> : <div className="flex justify-between items-center pt-2">
             <div>
               <CountUp
                 end={activeServices.length}
