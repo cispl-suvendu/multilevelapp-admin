@@ -10,7 +10,10 @@ const SignupSchema = Yup.object().shape({
     firstName: Yup.string().required('First Name Required'),
     lastName: Yup.string().required('Last Name Required'),
     email: Yup.string().email('Invalid email').required('Email Required'),
-    password: Yup.string().min('6').max('12').required('Password Required'),
+    password: Yup.string().min('6').max('12').required('Password Required').matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/,
+        "Must Contain 6 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      ),
     passwordConfirmation: Yup.string().label('confirm password').required().oneOf([Yup.ref('password'), null], 'Passwords must match')
 });
 
@@ -34,7 +37,7 @@ export default function Register({ title, initialValues, handleSubmit, signInLin
     return (
         <section className="bg-gray-light2 min-h-screen flex justify-center items-center py-6">
             <div className="md:w-2/5 w-10/12">
-                <div className="bg-white-color p-6 rounded-md shadow-sm hover:shadow-md border">
+                <div className="bg-white-color p-6 rounded shadow-sm hover:shadow-md">
                     <div className="flex justify-between item-center my-3">
                         <h1 className="text-3xl font-bold capitalize">{title}</h1>
                         <Link to={"/"} className="flex items-center gap-1 hover:text-active-color"><BiArrowBack /> Back</Link>
@@ -87,7 +90,7 @@ export default function Register({ title, initialValues, handleSubmit, signInLin
                                     </label>
                                     <label className="block mb-4">
                                         <span className="block text-md font-medium text-slate-400 mb-1">Password</span>
-                                        <Field name="password" type="password" className="border w-full py-2 px-3 rounded h-12" placeholder="password" />
+                                        <Field name="password" type="password" className="border w-full py-2 px-3 rounded h-12" placeholder="Password" />
                                     </label>
                                     <label className="block mb-4">
                                         <span className="block text-md font-medium text-slate-400 mb-1">Confirm Password</span>

@@ -31,7 +31,7 @@ export default function Login({ title, initialValues, handleSubmit, signUpLink, 
     return (
         <section className="bg-gray-light2 min-h-screen flex justify-center items-center">
             <div className="md:w-2/5 w-10/12">
-                <div className="bg-white-color p-6 rounded-md shadow-sm hover:shadow-md border">
+                <div className="bg-white-color p-6 rounded shadow-sm hover:shadow-md">
                 <div className="flex justify-between item-center my-3">
                         <h1 className="text-3xl font-bold capitalize">{title}</h1>
                         <Link to={"/"} className="flex items-center gap-1 hover:text-active-color"><BiArrowBack /> Back</Link>
@@ -71,7 +71,7 @@ export default function Login({ title, initialValues, handleSubmit, signUpLink, 
                                     </label>
                                     <label className="block mb-4">
                                         <span className="block text-md font-medium text-slate-400 mb-1">Password</span>
-                                        <Field name="password" type="password" className="border w-full py-2 px-3 rounded h-12" placeholder="password" />
+                                        <Field name="password" type="password" className="border w-full py-2 px-3 rounded h-12" placeholder="Password" />
                                     </label>
                                     <button className="rounded bg-active-color text-white w-full py-3 font-bold text-white-color disabled:bg-gray-light3 disabled:cursor-not-allowed" type="submit" disabled={isLoading}>{isLoading ? 'Please wait...' : 'Sign in to your account'}</button>
                                 </Form>

@@ -355,7 +355,7 @@ export const RootContextProvider = ({ children }) => {
     const [vendorAllService, setVendorAllService] = useState([])
 
     const fetchAllServices_AS_VENDOR = () => {
-        setLOADING(true)
+        setServiceIsLoading(true)
         try {
             fetch(`${API_END_POINT}/vendor/services/groupby/createdby/${CURRENT_USER._id}`, {
                 method: "GET",
@@ -369,16 +369,16 @@ export const RootContextProvider = ({ children }) => {
                 })
                 .then(data => {
                     setVendorAllService(data)
-                    setLOADING(false)
+                    setServiceIsLoading(false)
                 })
                 .catch((error) => {
                     toast.error(error.message);
-                    setLOADING(false)
+                    setServiceIsLoading(false)
                 });
 
         } catch (error) {
             toast.error(error.message);
-            setLOADING(false)
+            setServiceIsLoading(false)
         }
     }
 

@@ -5,7 +5,10 @@ import { useLocation, useParams } from 'react-router';
 
 
 const SignupSchema = Yup.object().shape({
-    password: Yup.string().min('6').max('12').required('Password Required')
+    password: Yup.string().min('6').max('12').required('Password Required').matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/,
+        "Must Contain 6 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      )
 });
 
 export default function ResetPassword({ title, initialValues, handleSubmit }) {

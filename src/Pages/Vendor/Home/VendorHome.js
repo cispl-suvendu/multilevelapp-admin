@@ -10,7 +10,7 @@ import DashBoardTable from "../../../Components/Table/DashBoardTable";
 
 export default function VendorHome() {
   const { DECODED_CURRENT_USER_Active_STATUS } = useUserContext()
-  const { vendorAllService, setVendorAllService, fetchAllServices_AS_VENDOR, LOADING } = useRootContext()
+  const { vendorAllService, setVendorAllService, fetchAllServices_AS_VENDOR, LOADING, serviceIsLoading } = useRootContext()
   useEffect(() => {
     fetchAllServices_AS_VENDOR()
     return () => {
@@ -36,7 +36,7 @@ export default function VendorHome() {
                 <div className="font-bold text-sm">Services</div>
                 <FiFeather className="text-3xl text-active-color" />
               </div>
-              {LOADING ? <Skeleton height="2rem"></Skeleton> :
+              {serviceIsLoading ? <Skeleton height="2rem"></Skeleton> :
                 <div className="flex justify-between items-center pt-2">
                   <div>
                     <CountUp
@@ -72,7 +72,7 @@ export default function VendorHome() {
           </div>
           <div className="mt-12 flex flex-col md:flex-row gap-6 flex-wrap">
             <div className="bg-white-color rounded-md shadow-md p-4 w-full flex-1 text-text-color">
-              {LOADING ? <Skeleton /> : <DashBoardTable
+              {serviceIsLoading ? <Skeleton /> : <DashBoardTable
                 title="Recently created services"
                 data={vendorAllService.slice(-5).sort().reverse()}
                 field1={{ field: "_id", header: "#id" }}

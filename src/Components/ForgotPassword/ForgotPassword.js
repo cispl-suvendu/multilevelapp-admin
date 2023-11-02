@@ -28,7 +28,7 @@ export default function ForgotPassword({ title, initialValues, handleSubmit }) {
     return (
         <section className="bg-gray-light2 min-h-screen flex justify-center items-center">
             <div className="md:w-2/5 w-10/12">
-                <div className="bg-white-color p-6 rounded-md shadow-sm hover:shadow-md border">
+                <div className="bg-white-color p-6 rounded shadow-sm hover:shadow-md">
                     <h1 className="mt-3 text-3xl font-bold capitalize">{title}</h1>
                     <div className="pt-4">
                         <Formik
