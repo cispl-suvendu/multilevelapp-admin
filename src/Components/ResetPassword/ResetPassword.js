@@ -12,7 +12,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 export default function ResetPassword({ title, initialValues, handleSubmit }) {
-    const { isLoading } = useUserContext()
+    const { isLoading, loadingIcon } = useUserContext()
     const {id, token} = useParams()
     const location = useLocation()
     let page_Type;
@@ -49,7 +49,7 @@ export default function ResetPassword({ title, initialValues, handleSubmit }) {
                                         <span className="block text-md font-medium text-slate-400 mb-1">Password</span>
                                         <Field name="password" type="password" className="border w-full py-2 px-3 rounded h-12" placeholder="password" />
                                     </label>
-                                    <button className="rounded bg-active-color text-white w-full py-3 font-bold text-white-color disabled:bg-gray-light3 disabled:cursor-not-allowed" type="submit" disabled={isLoading}>{isLoading ? 'Please wait...' : 'Send'}</button>
+                                    <button className="rounded bg-active-color text-white w-full py-3 font-bold text-white-color disabled:py-0 disabled:cursor-not-allowed" type="submit" disabled={isLoading}>{isLoading ? loadingIcon : 'Send'}</button>
                                 </Form>
                             )}
                         </Formik>

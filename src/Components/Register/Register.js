@@ -18,7 +18,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 export default function Register({ title, initialValues, handleSubmit, signInLink, socialLogin, forgotPasswordLink }) {
-    const { isLoading } = useUserContext()
+    const { isLoading, loadingIcon } = useUserContext()
     const location = useLocation()
     let page_Type;
     function getPageType() {
@@ -96,7 +96,7 @@ export default function Register({ title, initialValues, handleSubmit, signInLin
                                         <span className="block text-md font-medium text-slate-400 mb-1">Confirm Password</span>
                                         <Field name="passwordConfirmation" type="password" className="border w-full py-2 px-3 rounded h-12" placeholder="Confirm Password" />
                                     </label>
-                                    <button className="rounded bg-active-color text-white w-full py-3 font-bold text-white-color disabled:bg-gray-light3 disabled:cursor-not-allowed" type="submit" disabled={isLoading}>{isLoading ? 'Please wait...' : 'Sign in to your account'}</button>
+                                    <button className="rounded bg-active-color text-white w-full py-3 font-bold text-white-color disabled:py-0 disabled:cursor-not-allowed" type="submit" disabled={isLoading}>{isLoading ? loadingIcon : 'Sign in to your account'}</button>
                                 </Form>
                             )}
                         </Formik>

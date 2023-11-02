@@ -16,6 +16,8 @@ export const RootContextProvider = ({ children }) => {
     const [LOADING, setLOADING] = useState(false)
     const [serviceIsLoading, setServiceIsLoading] = useState(false)
 
+    
+
 
     const shitchNavStatus = () => {
         setToggleMainNav(prevStatus => !prevStatus)
